@@ -1,69 +1,63 @@
 // Task 2: Fetch Products with .then()
-
 function fetchProductsThen() {
     fetch("https://www.course-api.com/javascript-store-products")
       .then(response => response.json()) // Convert response to JSON
       .then(products => {
-        // Log each product's name
-        products.forEach(product => {
-          console.log(product.name);
-        });
+        console.log("Fetched with .then():", products); // Debugging
+        displayProducts(products); // Pass products to display function
       })
       .catch(error => handleError(error)); // Handle errors
   }
   
-  // Trigger the fetch function to test
-  fetchProductsThen();
-  
   // Task 3: Fetch Products with async/await
-
-async function fetchProductsAsync() {
+  async function fetchProductsAsync() {
     try {
       const response = await fetch("https://www.course-api.com/javascript-store-products");
       const products = await response.json();
-      displayProducts(products); // Display products on success
+      console.log("Fetched with async/await:", products); // Debugging
+      displayProducts(products); // Pass products to display function
     } catch (error) {
-      handleError(error); // Handle errors using helper function
+      handleError(error); // Handle errors
     }
   }
   
-  // Trigger the fetch function to test
-  fetchProductsAsync();
-  
-  // Task 4: Display the Products
-
-function displayProducts(products) {
+  // Task 4: Display the Products in the DOM
+  function displayProducts(products) {
     const container = document.getElementById("product-container");
+    container.innerHTML = ""; // Clear previous content
   
-    // Loop through the first 5 products
     products.slice(0, 5).forEach(product => {
+      // Create product card container
       const productCard = document.createElement("div");
       productCard.classList.add("product-card");
   
+      // Extract product data from fields
       const productImage = document.createElement("img");
-      productImage.src = product.image;
-      productCard.appendChild(productImage);
+      productImage.src = product.fields.image[0].url;
+      productImage.alt = product.fields.name;
   
       const productName = document.createElement("h3");
-      productName.textContent = product.name;
-      productCard.appendChild(productName);
+      productName.textContent = product.fields.name;
   
       const productPrice = document.createElement("p");
-      productPrice.textContent = `$${product.price}`;
+      productPrice.textContent = `$${product.fields.price}`;
+  
+      // Append elements to the product card
+      productCard.appendChild(productImage);
+      productCard.appendChild(productName);
       productCard.appendChild(productPrice);
   
-      container.appendChild(productCard); // Append the product card to the container
+      // Append product card to the container
+      container.appendChild(productCard);
     });
   }
   
   // Task 5: Reusable Error Handler
-
-function handleError(error) {
-    console.error("An error occurred: " + error.message);
+  function handleError(error) {
+    console.error("An error occurred:", error.message);
   }
   
-  // Task 6: Call Your Fetch Functions
-
-// Call both functions to fetch and display the products
-fetchProductsThen();
-fetchProductsAsync();
+  // Task 6: Call Fetch Functions at Script Load
+  fetchProductsThen();
+  fetchProductsAsync();
+  
