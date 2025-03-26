@@ -15,3 +15,4 @@ function fetchProductsThen() {
   // Trigger the fetch function to test
   fetchProductsThen();
   
+  
