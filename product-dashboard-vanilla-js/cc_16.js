@@ -30,3 +30,29 @@ async function fetchProductsAsync() {
   // Trigger the fetch function to test
   fetchProductsAsync();
   
+  // Task 4: Display the Products
+
+function displayProducts(products) {
+    const container = document.getElementById("product-container");
+  
+    // Loop through the first 5 products
+    products.slice(0, 5).forEach(product => {
+      const productCard = document.createElement("div");
+      productCard.classList.add("product-card");
+  
+      const productImage = document.createElement("img");
+      productImage.src = product.image;
+      productCard.appendChild(productImage);
+  
+      const productName = document.createElement("h3");
+      productName.textContent = product.name;
+      productCard.appendChild(productName);
+  
+      const productPrice = document.createElement("p");
+      productPrice.textContent = `$${product.price}`;
+      productCard.appendChild(productPrice);
+  
+      container.appendChild(productCard); // Append the product card to the container
+    });
+  }
+  
